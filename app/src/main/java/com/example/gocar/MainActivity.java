@@ -41,7 +41,7 @@ public class MainActivity extends Activity implements VehiclesAdapter.OnVehicleL
     private SQLiteHandler db;
     private SessionManager session;
     private ArrayList<Vehicles> vehiclesList;
-    private ArrayList<Vehicles> vehiclesListSorted;
+    public static ArrayList<Vehicles> vehiclesListSorted;
     private ArrayList<Vehicles> LatLo;
     private ArrayList<Double> DistanceArray;
     private ArrayList<Double> TempArray;
@@ -52,6 +52,7 @@ public class MainActivity extends Activity implements VehiclesAdapter.OnVehicleL
     private Location LocationGps;
     private Location LocationNetwork;
     private Location LocationPassive;
+    public static int index;
 
     private Double UserLat,UserLonG;
     private static  final int REQUEST_LOCATION=1;
@@ -259,17 +260,17 @@ public class MainActivity extends Activity implements VehiclesAdapter.OnVehicleL
     }
 
     public void OnVehicleClick(int position) {
-
+        index=position;
         String id = String.valueOf(vehiclesListSorted.get(position).getId());
         String name = vehiclesListSorted.get(position).getName();
         String year = vehiclesListSorted.get(position).getYear();
         String latitude = String.valueOf(vehiclesListSorted.get(position).getLatitude());
         String longitude = String.valueOf(vehiclesListSorted.get(position).getLongitude());
-        Double latit=Double.parseDouble(latitude);
-        Double longit=Double.parseDouble(longitude);
+            Double latit=Double.parseDouble(latitude);
+            Double longit=Double.parseDouble(longitude);
         String image = vehiclesListSorted.get(position).getImage_path();
         String fuel = String.valueOf(vehiclesListSorted.get(position).getFuel_level());
-        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        Intent intent = new Intent(MainActivity.this, DeviceActivity.class);
         intent.putExtra("ID",id);
         intent.putExtra("NAME",name);
         intent.putExtra("YEAR",year);

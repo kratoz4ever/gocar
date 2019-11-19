@@ -38,7 +38,7 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehiclesAdapter.Produc
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         Vehicles vehicles = VehiclesList.get(position);
-        String path = "http://192.168.1.9/" + vehicles.getImage_path();
+        String path = "http://192.168.1.6/" + vehicles.getImage_path();
         Picasso.get().load(path).into(holder.Car_image);
         holder.Car_Name.setText("Vehicle Name : " + vehicles.getName());
         holder.Car_Model.setText("Vehicle Model : " + vehicles.getYear());

@@ -22,7 +22,7 @@ public class Maps extends AppCompatActivity {
         String image = getIntent().getStringExtra("IMAGE");
         String fuel = getIntent().getStringExtra("FUEL");
         IMAGE = findViewById(R.id.image);
-        String path = "http://192.168.1.12/" + image;
+        String path = "http://192.168.1.6/" + image;
         Picasso.get().load(path).into(IMAGE);
         String text ="ID : " + id
                 + "\n" +

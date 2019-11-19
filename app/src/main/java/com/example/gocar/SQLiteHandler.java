@@ -22,6 +22,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     // Login table name
     private static final String TABLE_USER = "user";
+    private static final String TABLE_REVIEWS = "reviews";
 
     // Login Table Columns names
     private static final String KEY_ID = "id";
@@ -32,6 +33,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_COUNTRY = "country";
     private static final String KEY_PHONE = "phone";
     private static final String KEY_CREATED_AT = "created_at";
+    private static final String KEY_REVIEW_ID = "reviewId";
+    private static final String KEY_UID_REVIEW = "UniqueId";
+    private static final String KEY_USER_ID = "userid";
+    private static final String KEY_CAR_ID = "Carid";
+    private static final String KEY_REVIEW = "UserReview";
 
     public SQLiteHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,6 +57,10 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_PHONE + " INTGER,"
                 + KEY_CREATED_AT + " TEXT" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
+        String CREATE_REVIEW_TABLE = "CREATE TABLE " + TABLE_REVIEWS + "("
+                + KEY_REVIEW_ID + " INTEGER PRIMARY KEY ," + KEY_UID_REVIEW + " TEXT," + KEY_USER_ID + " TEXT,"
+                + KEY_CAR_ID + " INTEGER," + KEY_REVIEW + " TEXT" + ")";
+        db.execSQL(CREATE_REVIEW_TABLE);
 
         Log.d(TAG, "Database tables created");
     }
@@ -60,6 +70,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_REVIEWS);
 
         // Create tables again
         onCreate(db);
@@ -85,6 +96,18 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
 
         Log.d(TAG, "New user inserted into sqlite: " + id);
+    }
+    public void addReview(String UniqueId , String userid , String Carid , String UserReview) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_UID_REVIEW , UniqueId);
+        values.put(KEY_USER_ID , userid);
+        values.put(KEY_CAR_ID , Carid);
+        values.put(KEY_REVIEW , UserReview);
+        long id = db.insert(TABLE_REVIEWS, null, values);
+        db.close();
+        Log.d(TAG, "New review has been inserted into sqlite: " + id);
     }
 
     /**
